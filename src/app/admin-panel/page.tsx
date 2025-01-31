@@ -34,8 +34,7 @@ interface Appointment {
     id: string;
     date: string;
     time: string;
-    customerName: string;
-    service: string;
+    name: string
     status: 'pending' | 'confirmed' | 'cancelled';
 }
 
@@ -57,8 +56,7 @@ export const AdminPanel=()=> {
                 id: '1',
                 date: '2024-01-20',
                 time: '10:00',
-                customerName: 'Ahmet Yılmaz',
-                service: 'Saç Kesimi',
+                name: 'John Doe',
                 status: 'confirmed'
             },
             // ... more appointments
@@ -104,9 +102,8 @@ export const AdminPanel=()=> {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Tarih</TableHead>
-                                    <TableHead>Saat</TableHead>
-                                    <TableHead>Müşteri</TableHead>
-                                    <TableHead>Hizmet</TableHead>
+                                    <TableHead>Saat</TableHead>                                
+                                    <TableHead>İsim</TableHead>
                                     <TableHead>Durum</TableHead>
                                     <TableHead>İşlemler</TableHead>
                                 </TableRow>
@@ -116,8 +113,7 @@ export const AdminPanel=()=> {
                                     <TableRow key={apt.id}>
                                         <TableCell>{format(new Date(apt.date), 'd MMMM yyyy', { locale: tr })}</TableCell>
                                         <TableCell>{apt.time}</TableCell>
-                                        <TableCell>{apt.customerName}</TableCell>
-                                        <TableCell>{apt.service}</TableCell>
+                                        <TableCell>{apt.name}</TableCell>
                                         <TableCell>{apt.status}</TableCell>
                                         <TableCell>
                                             <Select
