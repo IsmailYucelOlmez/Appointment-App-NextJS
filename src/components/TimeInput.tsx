@@ -4,14 +4,7 @@ import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage} from "@/components/ui/form";
 import {
   Popover,
   PopoverContent,
@@ -79,7 +72,7 @@ return (
                                 <PopoverContent className="w-auto p-0">
                                     <div className="sm:flex">
                                         
-                                        <Calendar mode="single" selected={field.value} onSelect={handleDateSelect} initialFocus disabled={(date) => date.getDay() !== 2}  />
+                                        <Calendar mode="single" selected={field.value} onSelect={handleDateSelect} initialFocus disabled={(date:Date) => date.getDay() !== 2}  />
                                             
                                             <div className="flex flex-col sm:flex-row sm:h-[300px] divide-y sm:divide-y-0 sm:divide-x">
                                                 <ScrollArea className="w-64 sm:w-auto">

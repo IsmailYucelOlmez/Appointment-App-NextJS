@@ -1,42 +1,15 @@
 'use client';
-
 import { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
-import {
-    Popover,
-    PopoverContent,
-    PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
-
-interface Appointment {
-    id: string;
-    date: string;
-    time: string;
-    name: string
-    status: 'pending' | 'confirmed' | 'cancelled';
-}
+import AppointmentDataTable, { Appointment } from '@/components/AppointmentDataTable';
 
 interface BlockedDate {
     date: string;
@@ -51,29 +24,12 @@ export const AdminPanel=()=> {
     // Fetch appointments and blocked dates from your API
     useEffect(() => {
         // Example data - replace with actual API calls
-        setAppointments([
-            {
-                id: '1',
-                date: '2024-01-20',
-                time: '10:00',
-                name: 'John Doe',
-                status: 'confirmed'
-            },
-            // ... more appointments
-        ]);
 
         setBlockedDates([
             { date: '2024-01-25', reason: 'Tatil' },
             // ... more blocked dates
         ]);
     }, []);
-
-    const handleStatusChange = (appointmentId: string, newStatus: 'pending' | 'confirmed' | 'cancelled') => {
-        setAppointments(appointments.map(apt =>
-            apt.id === appointmentId ? { ...apt, status: newStatus } : apt
-        ));
-        // Add API call to update status
-    };
 
     const handleBlockDate = () => {
         if (newBlockedDate.date && newBlockedDate.reason) {
@@ -93,49 +49,8 @@ export const AdminPanel=()=> {
             <h1 className="text-3xl font-bold mb-6">Admin Panel</h1>
 
             <div className="space-y-8">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Randevular</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead>Tarih</TableHead>
-                                    <TableHead>Saat</TableHead>                                
-                                    <TableHead>İsim</TableHead>
-                                    <TableHead>Durum</TableHead>
-                                    <TableHead>İşlemler</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {appointments.map((apt) => (
-                                    <TableRow key={apt.id}>
-                                        <TableCell>{format(new Date(apt.date), 'd MMMM yyyy', { locale: tr })}</TableCell>
-                                        <TableCell>{apt.time}</TableCell>
-                                        <TableCell>{apt.name}</TableCell>
-                                        <TableCell>{apt.status}</TableCell>
-                                        <TableCell>
-                                            <Select
-                                                value={apt.status}
-                                                onValueChange={(value) => handleStatusChange(apt.id, value as 'pending' | 'confirmed' | 'cancelled')}
-                                            >
-                                                <SelectTrigger className="w-[180px]">
-                                                    <SelectValue placeholder="Durum seç" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="pending">Beklemede</SelectItem>
-                                                    <SelectItem value="confirmed">Onaylandı</SelectItem>
-                                                    <SelectItem value="cancelled">İptal Edildi</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </CardContent>
-                </Card>
+
+                <AppointmentDataTable appointments={appointments} setAppointments={setAppointments} />
 
                 <Card>
                     <CardHeader>
