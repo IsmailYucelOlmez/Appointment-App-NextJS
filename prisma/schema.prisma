@@ -1,5 +1,4 @@
 generator client {
-  
   provider = "prisma-client-js"
 }
 
@@ -22,10 +21,10 @@ model User {
 model Appointment {
     id        String   @id @default(auto()) @map("_id") @db.ObjectId
     date      DateTime
-    title     String
-    notes     String?
+    patient   String
     user      User     @relation(fields: [userId], references: [id])
     userId    String   @db.ObjectId
+    status    String   @default("pending")
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 }

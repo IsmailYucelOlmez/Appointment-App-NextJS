@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import TimeInput from "@/components/TimeInput";
+//import TimeInput from "@/components/TimeInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { Appointment } from './AppointmentDataTable';
+import DatePicker from './DateTimePicker';
 
 const formSchema = z.object({
   
@@ -28,7 +29,6 @@ const formSchema = z.object({
 
 const AppointmentForm = ({appointments,setAppointments}: {appointments: Appointment[], setAppointments: React.Dispatch<React.SetStateAction<Appointment[]>>}) => {
 
-
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
@@ -48,6 +48,8 @@ const AppointmentForm = ({appointments,setAppointments}: {appointments: Appointm
         };
         setAppointments([...appointments, newAppointment]);
         form.reset();
+
+        
       };
 
   return (
@@ -58,9 +60,9 @@ const AppointmentForm = ({appointments,setAppointments}: {appointments: Appointm
           <CardContent>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            
-            <TimeInput form={form} />
-
+                    
+            <DatePicker form={form}/> 
+                              
             <FormField
               control={form.control}
               name="patient"

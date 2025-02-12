@@ -6,7 +6,6 @@ import { format } from "date-fns";
 import { tr } from 'date-fns/locale';
 
 export interface Appointment {
-  id: string;
   time: Date;
   patient: string;
   name:string;
@@ -15,10 +14,8 @@ export interface Appointment {
 
 const AppointmentDataTable = ({appointments,setAppointments}: {appointments: Appointment[], setAppointments: React.Dispatch<React.SetStateAction<Appointment[]>>}) => {
 
-    const handleStatusChange = (appointmentId: string, newStatus: 'pending' | 'confirmed' | 'cancelled') => {
-        setAppointments(appointments.map(apt =>
-            apt.id === appointmentId ? { ...apt, status: newStatus } : apt
-        ));
+    const handleStatusChange = ( newStatus: 'pending' | 'confirmed' | 'cancelled') => {
+        
         // Add API call to update status
     };
 
@@ -42,7 +39,7 @@ const AppointmentDataTable = ({appointments,setAppointments}: {appointments: App
                     <TableBody>
                         {appointments.map((apt) => (
                             <TableRow key={apt.id}>
-                                <TableCell>{format(new Date(apt.time), 'dd MM yyyy eeee HH:mm', { locale: tr })}</TableCell>
+                                <TableCell>{format(new Date(apt.time), 'dd LLLL yyyy HH:mm', { locale: tr })}</TableCell>
                                 <TableCell>{apt.patient}</TableCell>
                                 <TableCell>{apt.name}</TableCell>
                                 <TableCell>{apt.status}</TableCell>

@@ -1,19 +1,18 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from "next/server";
-
-
 const prisma = new PrismaClient();
+
 // GET - Tüm randevuları getir
 export async function GET() {
     try {
         const appointments = await prisma.appointment.findMany({
             include: {
-                user: true,
-                service: true,
+                user: true,             
             },
         });
         return NextResponse.json(appointments);
     } catch (error) {
+        console.error(error);
         return NextResponse.json({ error: "Randevular getirilemedi" }, { status: 500 });
     }
 }
@@ -22,20 +21,20 @@ export async function GET() {
 export async function POST(request: Request) {
     try {
         const body = await request.json();
-        const { userId, serviceId, date, time, status } = body;
+        const { userId, date, patient, status } = body;
 
         const appointment = await prisma.appointment.create({
             data: {
-                userId,
-                serviceId,
-                date,
-                time,
-                status: status || "PENDING",
+                userId,              
+                date: new Date(date),
+                patient,     
+                status 
             },
         });
 
         return NextResponse.json(appointment);
     } catch (error) {
+        console.error(error);
         return NextResponse.json({ error: "Randevu oluşturulamadı" }, { status: 500 });
     }
 }
@@ -53,6 +52,7 @@ export async function PUT(request: Request) {
 
         return NextResponse.json(appointment);
     } catch (error) {
+        console.error(error);
         return NextResponse.json({ error: "Randevu güncellenemedi" }, { status: 500 });
     }
 }
@@ -73,6 +73,7 @@ export async function DELETE(request: Request) {
 
         return NextResponse.json({ message: "Randevu silindi" });
     } catch (error) {
+        console.error(error);
         return NextResponse.json({ error: "Randevu silinemedi" }, { status: 500 });
     }
 }
