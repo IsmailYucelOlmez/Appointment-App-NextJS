@@ -4,6 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { format } from "date-fns";
 import { tr } from 'date-fns/locale';
+import { prisma } from '@/lib/db';
 
 export interface Appointment {
   time: Date;
@@ -12,7 +13,12 @@ export interface Appointment {
   status: 'pending' | 'confirmed' | 'cancelled';
 }
 
-const AppointmentDataTable = ({appointments,setAppointments}: {appointments: Appointment[], setAppointments: React.Dispatch<React.SetStateAction<Appointment[]>>}) => {
+const AppointmentDataTable = async () => {
+
+
+    const appointments = await prisma.appointment.findMany()
+
+    
 
     const handleStatusChange = ( newStatus: 'pending' | 'confirmed' | 'cancelled') => {
         

@@ -23,7 +23,7 @@ export default function DatePicker({ form }: { form: any }) {
             newDate.setHours(parseInt(hour, 0));
             
             setDate(newDate);
-            form.setValue("time", newDate);
+            form.setValue("date", newDate);
             console.log(date)
         }
     };
@@ -33,7 +33,7 @@ export default function DatePicker({ form }: { form: any }) {
             const newDate = new Date(date);
             newDate.setMinutes(parseInt(minute, 0));
             setDate(newDate);
-            form.setValue("time", newDate);
+            form.setValue("date", newDate);
             console.log(date)
         }
     }    
@@ -41,7 +41,7 @@ export default function DatePicker({ form }: { form: any }) {
     const handleDateSelect = (newDate: Date | undefined) => {
         setDate(newDate);
         if (newDate) {
-            form.setValue("time", newDate);
+            form.setValue("date", newDate);
         }
     }
 

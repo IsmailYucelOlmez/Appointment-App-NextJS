@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { format } from 'date-fns';
 import { tr } from 'date-fns/locale';
 import { Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
@@ -10,26 +10,25 @@ import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
 import AppointmentDataTable, { Appointment } from '@/components/AppointmentDataTable';
+import { auth } from '@/lib/auth';
+import { redirect } from 'next/navigation';
 
 interface BlockedDate {
     date: string;
     reason: string;
 }
 
-export const AdminPanel=()=> {
+const AdminPanel=async()=> {
+
+    const session= await auth();
+    if(!session){
+        return redirect('/sign-in');
+    }
+
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [blockedDates, setBlockedDates] = useState<BlockedDate[]>([]);
     const [newBlockedDate, setNewBlockedDate] = useState({ date: '', reason: '' });
 
-    // Fetch appointments and blocked dates from your API
-    useEffect(() => {
-        // Example data - replace with actual API calls
-
-        setBlockedDates([
-            { date: '2024-01-25', reason: 'Tatil' },
-            // ... more blocked dates
-        ]);
-    }, []);
 
     const handleBlockDate = () => {
         if (newBlockedDate.date && newBlockedDate.reason) {

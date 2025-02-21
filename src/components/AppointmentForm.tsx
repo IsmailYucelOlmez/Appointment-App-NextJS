@@ -7,12 +7,12 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
-import { Appointment } from './AppointmentDataTable';
 import DatePicker from './DateTimePicker';
+import { createAppointment } from '@/actions/actions';
 
 const formSchema = z.object({
   
-  time: z.date({
+  date: z.date({
     required_error: "A date and time is required.",
   }),
   patient: z.string({
@@ -26,29 +26,28 @@ const formSchema = z.object({
   })
 });
 
+export type AppointmentForm=z.infer<typeof formSchema>
 
-const AppointmentForm = ({appointments,setAppointments}: {appointments: Appointment[], setAppointments: React.Dispatch<React.SetStateAction<Appointment[]>>}) => {
+
+const AppointmentForm = () => {
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
         defaultValues: {
           patient: "",
           name:"",
-          time: new Date(),
+          date: new Date(),
           status:"pending",
     
         },
-      });    
+      }); 
+      
+      
 
     const onSubmit = (values: z.infer<typeof formSchema>) => {
-        const newAppointment: Appointment = {
-          ...values,
-          id: crypto.randomUUID(),
-          status: values.status as 'pending' | 'confirmed' | 'cancelled'
-        };
-        setAppointments([...appointments, newAppointment]);
+        
+        await createAppointment(values);
         form.reset();
-
         
       };
 
