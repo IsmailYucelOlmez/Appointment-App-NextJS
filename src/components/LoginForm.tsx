@@ -28,14 +28,6 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={async (formData) => {
-          "use server";
-          await executeAction({
-            actionFn: async () => {
-              await signIn("credentials", formData);
-            },
-          });
-        }}>
             <div className="grid gap-6">
               <div className="flex flex-col gap-4">
                 <AppleSignIn />
@@ -46,6 +38,16 @@ export function LoginForm({
                   Or continue with
                 </span>
               </div>
+            </div>
+            <form action={async (formData) => {
+              "use server";
+              await executeAction({
+                actionFn: async () => {
+                await signIn("credentials", formData);
+              },
+              });
+            }}>
+            <div className="grid gap-6">
               <div className="grid gap-6">
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
@@ -74,7 +76,7 @@ export function LoginForm({
               </div>
               <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
-                <a href="#" className="underline underline-offset-4">
+                <a href="/sign-up" className="underline underline-offset-4">
                   Sign up
                 </a>
               </div>

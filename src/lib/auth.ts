@@ -13,7 +13,17 @@ const adapter = PrismaAdapter(prisma);
 export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter,
   providers: [
-    Google,
+    Google({
+      clientId: process.env.AUTH_GOOGLE_ID,
+      clientSecret: process.env.AUTH_GOOGLE_SECRET,
+      authorization: {
+        params: {
+          prompt: "consent",
+          access_type: "offline",
+          response_type: "code"
+        }
+      },
+    }),
     Apple,
     Credentials({
       credentials: {

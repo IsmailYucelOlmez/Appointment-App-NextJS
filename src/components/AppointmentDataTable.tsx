@@ -1,3 +1,4 @@
+"use server"
 import React from 'react'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
@@ -20,7 +21,7 @@ const AppointmentDataTable = async () => {
 
     
 
-    const handleStatusChange = ( newStatus: 'pending' | 'confirmed' | 'cancelled') => {
+    const handleStatusChange = (id:string, newStatus: 'pending' | 'confirmed' | 'cancelled') => {
         
         // Add API call to update status
     };
@@ -45,12 +46,12 @@ const AppointmentDataTable = async () => {
                     <TableBody>
                         {appointments.map((apt) => (
                             <TableRow key={apt.id}>
-                                <TableCell>{format(new Date(apt.time), 'dd LLLL yyyy HH:mm', { locale: tr })}</TableCell>
+                                <TableCell>{format(new Date(apt.date), 'dd LLLL yyyy HH:mm', { locale: tr })}</TableCell>
                                 <TableCell>{apt.patient}</TableCell>
-                                <TableCell>{apt.name}</TableCell>
+                                {/* <TableCell>{apt.name}</TableCell> */}
                                 <TableCell>{apt.status}</TableCell>
                                 <TableCell>
-                                <Select value={apt.status} onValueChange={(value) => handleStatusChange(apt.id, value as 'pending' | 'confirmed' | 'cancelled')} >
+                                {/* <Select value={apt.status} onValueChange={(value) => handleStatusChange(apt.id, value as 'pending' | 'confirmed' | 'cancelled')} >
                                     <SelectTrigger className="w-[180px]">
                                         <SelectValue placeholder="Durum seç" />
                                     </SelectTrigger>
@@ -59,7 +60,7 @@ const AppointmentDataTable = async () => {
                                         <SelectItem value="confirmed">Onaylandı</SelectItem>
                                         <SelectItem value="cancelled">İptal Edildi</SelectItem>
                                     </SelectContent>
-                                </Select>
+                                </Select> */}
                                 </TableCell>
                             </TableRow>
                         ))}

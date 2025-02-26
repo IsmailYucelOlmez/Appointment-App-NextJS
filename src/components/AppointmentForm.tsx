@@ -1,9 +1,9 @@
+"use client"
 import React from 'react'
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-//import TimeInput from "@/components/TimeInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
@@ -44,10 +44,17 @@ const AppointmentForm = () => {
       
       
 
-    const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const onSubmit =async (values: z.infer<typeof formSchema>) => {
         
-        await createAppointment(values);
-        form.reset();
+        const result=await createAppointment(values);
+        console.log(result);
+        
+        if (result?.success) {
+          console.log('aapointment success');
+          form.reset();
+        } else {
+          alert(result?.error.message);
+        }
         
       };
 

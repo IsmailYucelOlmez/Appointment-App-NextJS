@@ -1,4 +1,4 @@
-import { LoginForm } from '@/components/LoginForm'
+import { RegisterForm } from '@/components/RegisterForm';
 import { auth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import React from 'react'
@@ -12,7 +12,7 @@ const session = await auth();
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
         
-        <LoginForm />
+        <RegisterForm />
 
       </div>
     </div>

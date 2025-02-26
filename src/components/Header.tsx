@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 const Header = () => {
@@ -8,7 +9,12 @@ const Header = () => {
       </div>
       
       <div>
-        login
+        <Link href="/sign-in">
+          <p>Sign In</p>
+        </Link>
+        <Link href="/sign-up">
+          <p>Sign Up</p>
+        </Link>
       </div>
     </div>
   )

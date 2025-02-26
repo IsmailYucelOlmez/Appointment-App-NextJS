@@ -3,16 +3,18 @@
 import { AppointmentForm } from "@/components/AppointmentForm";
 import { prisma } from "@/lib/db";
 import { executeAction } from "@/lib/executeAction";
-import { schema } from "@/lib/schema";
+import { registerSchema } from "@/lib/schema";
+import { NextApiResponse } from "next";
 
 export const signUp = async (formData: FormData) => {
     return executeAction({
       actionFn: async () => {
         const email = formData.get("email");
         const password = formData.get("password");
-        const validatedData = schema.parse({ email, password });
+        const validatedData = registerSchema.parse({ name, email, password });
         await prisma.user.create({
           data: {
+            name:validatedData.name,
             email: validatedData.email.toLocaleLowerCase(),
             password: validatedData.password,
           },
@@ -25,15 +27,22 @@ export const signUp = async (formData: FormData) => {
 
 export const createAppointment=async(formData:AppointmentForm)=>{
 
-    await prisma.appointment.create({
+    try{
+        const result=await prisma.appointment.create({
  
-        data: {
-            date: new Date(formData.date),
-            patient: formData.patient,
-            userId: formData.name,
-            status: formData.status || "pending",
-        },       
-    })
+            data: {
+                date: new Date(formData.date),
+                patient: formData.patient,
+                userId: '605c72ef1532072fcf9c4d59',
+                status: formData.status || "pending",
+            },       
+        })
+
+        return {success:true,appointment:result}
+    }catch(e){
+        
+        return {success:false,error:e}
+    }
 }
 
 export const updateAppointment=async(formData:AppointmentForm,id:string)=>{
