@@ -1,10 +1,8 @@
 "use server";
-
 import { AppointmentForm } from "@/components/AppointmentForm";
 import { prisma } from "@/lib/db";
 import { executeAction } from "@/lib/executeAction";
 import { registerSchema } from "@/lib/schema";
-import { NextApiResponse } from "next";
 
 export const signUp = async (formData: FormData) => {
     return executeAction({
@@ -45,16 +43,24 @@ export const createAppointment=async(formData:AppointmentForm)=>{
     }
 }
 
-export const updateAppointment=async(formData:AppointmentForm,id:string)=>{
+export const updateAppointment=async(status:string,id:string)=>{
 
-    await prisma.appointment.update({
-        where:{
-            id:id,
-        },
-        data:{
-            status:formData.status
-        }
-    })
+    try{
+
+        const result=await prisma.appointment.update({
+            where:{
+                id:id,
+            },
+            data:{
+                status:status
+            }
+        })
+
+        return {success:true,appointment:result}
+
+    }catch(e){
+        return {success:false,error:e}
+    }
 }
 
 export const deleteAppointment=async(id:string)=>{
