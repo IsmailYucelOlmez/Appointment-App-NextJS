@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { tr } from 'date-fns/locale';
 import { prisma } from '@/lib/db';
 import AppointmentStatu from './appointmentStatu';
-//import { updateAppointment } from '@/actions/actions';
+import AppointmentDelete from './appointment/AppointmentDelete';
 
 export interface Appointment {
     date: Date;
@@ -19,6 +19,7 @@ const AppointmentDataTable = async () => {
 
     const appointments = await prisma.appointment.findMany()
 
+    
     
 
   return (
@@ -45,8 +46,11 @@ const AppointmentDataTable = async () => {
                                 <TableCell>{apt.patient}</TableCell>
                                 {/* <TableCell>{apt.name}</TableCell> */}
                                 <TableCell>{apt.status}</TableCell>
-                                <TableCell>
+                                <TableCell className='flex items-center gap-2'>
                                     <AppointmentStatu apt={apt} />
+
+                                    <AppointmentDelete id={apt.id} />
+
                                 </TableCell>
                             </TableRow>
                         ))}

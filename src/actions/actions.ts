@@ -64,11 +64,18 @@ export const updateAppointment=async(status:string,id:string)=>{
 }
 
 export const deleteAppointment=async(id:string)=>{
-    await prisma.appointment.delete({
-        where:{
-            id:id
-        }
-    })
+
+    try{
+        const result=await prisma.appointment.delete({
+            where:{
+                id:id
+            }
+        })
+
+        return {success:true,appointment:result}
+    }catch(e){
+        return {success:false,error:e}
+    }
 }
 
 

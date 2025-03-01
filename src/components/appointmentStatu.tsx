@@ -4,13 +4,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Appointment } from './AppointmentDataTable';
 import { updateAppointment } from '@/actions/actions';
 
-type AppointmentStatuProps = {
+export type AppointmentStatuProps = {
     apt: Appointment & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
     },
-    //handleStatusChange: (id: string, newStatus: 'pending' | 'confirmed' | 'cancelled') => void;
 }
 
 const appointmentStatu = ({apt}:AppointmentStatuProps) => {
@@ -32,8 +31,7 @@ const appointmentStatu = ({apt}:AppointmentStatuProps) => {
 
   return (
     <Select value={apt.status} onValueChange={async(value) =>{
-                                                await handleStatusChange(apt.id, value as 'pending' | 'confirmed' | 'cancelled');
-                                                alert('Appointment Updated') }} >
+                                                await handleStatusChange(apt.id, value as 'pending' | 'confirmed' | 'cancelled'); }} >
         <SelectTrigger className="w-[180px]">
             <SelectValue placeholder="Durum seç" />
         </SelectTrigger>
