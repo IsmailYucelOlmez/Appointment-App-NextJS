@@ -9,23 +9,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon } from 'lucide-react';
 import { Calendar } from '@/components/ui/calendar';
 import { cn } from '@/lib/utils';
-import AppointmentDataTable, { Appointment } from '@/components/AppointmentDataTable';
-import { auth } from '@/lib/auth';
-import { redirect } from 'next/navigation';
+import AppointmentDataTable from '@/components/AppointmentDataTable';
 
 interface BlockedDate {
     date: string;
     reason: string;
 }
 
-const AdminPanel=async()=> {
+const AdminPanel=()=> {
 
-    const session= await auth();
-    if(!session){
-        return redirect('/sign-in');
-    }
-
-    const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [blockedDates, setBlockedDates] = useState<BlockedDate[]>([]);
     const [newBlockedDate, setNewBlockedDate] = useState({ date: '', reason: '' });
 
@@ -49,7 +41,7 @@ const AdminPanel=async()=> {
 
             <div className="space-y-8">
 
-                <AppointmentDataTable appointments={appointments} setAppointments={setAppointments} />
+                <AppointmentDataTable />
 
                 <Card>
                     <CardHeader>
