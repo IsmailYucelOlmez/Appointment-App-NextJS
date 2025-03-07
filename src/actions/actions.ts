@@ -7,6 +7,8 @@ import { registerSchema } from "@/lib/schema";
 export const signUp = async (formData: FormData) => {
     return executeAction({
       actionFn: async () => {
+        console.log(formData)
+        const name=formData.get("name");
         const email = formData.get("email");
         const password = formData.get("password");
         const validatedData = registerSchema.parse({ name, email, password });

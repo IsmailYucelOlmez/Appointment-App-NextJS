@@ -4,7 +4,8 @@ import AppointmentForm from "@/components/AppointmentForm";
 
 
 export default function Home() {
-  
+  //65+ people priority
+  //in hospital row (states[completed,pending,inHospital])
 
   return (
     <main className="container mx-auto py-8">

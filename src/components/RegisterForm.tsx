@@ -42,6 +42,7 @@ export function RegisterForm({
             <form action={async (formData) => {
               "use server";
               const res = await signUp(formData);
+              console.log(res)
                 if (res.success) {
                 redirect("/sign-in");
               }
@@ -66,20 +67,12 @@ export function RegisterForm({
                     required
                 />
                 </div>
-                <div className="grid gap-2">
-                  <div className="flex items-center">
-                    <Label htmlFor="password">Password</Label>
-                    <a
-                      href="#"
-                      className="ml-auto text-sm underline-offset-4 hover:underline"
-                    >
-                      Forgot your password?
-                    </a>
-                  </div>
+                <div className="grid gap-2">          
+                  <Label htmlFor="password">Password</Label>        
                   <Input id="password" type="password" required />
                 </div>
-                <Button type="submit" className="w-full">
-                  Login
+                <Button className="w-full">
+                  Sign Up
                 </Button>
               </div>
               <div className="text-center text-sm">

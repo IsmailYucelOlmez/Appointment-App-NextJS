@@ -47,10 +47,11 @@ const AppointmentDataTable = async () => {
                                 {/* <TableCell>{apt.name}</TableCell> */}
                                 <TableCell>{apt.status}</TableCell>
                                 <TableCell className='flex items-center gap-2'>
-                                    <AppointmentStatu apt={apt} />
+                                    <AppointmentStatu apt={apt} />                           
 
+                                </TableCell>
+                                <TableCell>
                                     <AppointmentDelete id={apt.id} />
-
                                 </TableCell>
                             </TableRow>
                         ))}

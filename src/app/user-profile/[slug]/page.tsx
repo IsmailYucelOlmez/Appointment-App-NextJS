@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
+"use server"
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 import { format } from 'date-fns'
 import {
@@ -13,26 +12,59 @@ import {
 } from '@/components/ui/table'
 import { prisma } from '@/lib/db'
 
-interface Appointment {
-    id: string
-    date: Date
-    service: string
-    status: 'pending' | 'confirmed' | 'cancelled'
-    provider: {
-        name: string
-        image?: string
+
+type ProfileParams = {
+    params: {
+        slug: string
     }
 }
 
-const UserProfile= async({params})=> {
+const UserProfile = async ({ params }: ProfileParams) => {
 
-    const userAppointments=await prisma.appointment.findUnique(
-        {where:{slug:params.slug},
+    const user = {
+        id: '1',
+        name: 'John Doe',
+        email: 'john@example.com',
+    };
+
+    const appointments = [
+        {
+            id: '1',
+            date: new Date(),
+            service: 'Saç Kesimi',
+            status: 'confirmed',
+            provider: {
+                name: 'Ahmet Kuaför',
+            }
+        },
+        {
+            id: '2',
+            date: new Date(Date.now() + 86400000), // tomorrow
+            service: 'Sakal Tıraşı',
+            status: 'pending',
+            provider: {
+                name: 'Mehmet Berber',
+            }
+        },
+        {
+            id: '3',
+            date: new Date(Date.now() - 86400000), // yesterday
+            service: 'Cilt Bakımı',
+            status: 'cancelled',
+            provider: {
+                name: 'Ayşe Güzellik Salonu',
+            }
+        }
+    ];
+
+    // Replace prisma query with dummy data
+    const userAppointments = appointments;
+    //const userAppointmentss=await prisma.appointment.findMany(
+        //{where:{userId:params.slug},
         
         //include:{user:true} for example get user with his appointments (for getUserById with user's appointments)
-        },
-        
-    )
+        //}, 
+    //)
 
     const getStatusColor = (status: string) => {
         switch (status) {
@@ -81,10 +113,6 @@ const UserProfile= async({params})=> {
                                     <TableCell>{appointment.service}</TableCell>
                                     <TableCell>
                                         <div className="flex items-center space-x-2">
-                                            <Avatar className="h-8 w-8">
-                                                <AvatarImage src={appointment.provider.image} />
-                                                <AvatarFallback>{appointment.provider.name[0]}</AvatarFallback>
-                                            </Avatar>
                                             <span>{appointment.provider.name}</span>
                                         </div>
                                     </TableCell>
