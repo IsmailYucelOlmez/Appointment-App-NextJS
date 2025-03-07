@@ -13,17 +13,13 @@ import {
 
 
 
-type ProfileParams = {
-    params: {
-        slug: string
-    }
-}
+// type ProfileParams = {
+//     params: {
+//         slug: string
+//     }
+// }
 
-const UserProfile = async ({ params }: ProfileParams) => {
-
-    const slug=params.slug;
-
-    console.log(slug);
+const UserProfile = async () => {
 
     const user = {
         id: '1',
