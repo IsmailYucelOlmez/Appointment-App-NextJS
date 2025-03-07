@@ -10,7 +10,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table'
-import { prisma } from '@/lib/db'
+
 
 
 type ProfileParams = {
@@ -20,6 +20,8 @@ type ProfileParams = {
 }
 
 const UserProfile = async ({ params }: ProfileParams) => {
+
+    const slug=params.slug;
 
     const user = {
         id: '1',

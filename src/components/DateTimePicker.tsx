@@ -2,6 +2,7 @@
 
 import { format } from "date-fns"
 import * as React from "react"
+import { UseFormReturn } from "react-hook-form"
 
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
@@ -13,8 +14,10 @@ import {
 import { cn } from "@/lib/utils"
 import { CalendarIcon } from "lucide-react"
 import { tr } from "date-fns/locale"
+import { AppointmentForm } from "./AppointmentForm"
 
-export default function DatePicker({ form }: { form: any }) {
+export default function DatePicker({ form }: { form: UseFormReturn<AppointmentForm> }) {
+
     const [date, setDate] = React.useState<Date>()
 
     const changeHour = (hour: string) => {
