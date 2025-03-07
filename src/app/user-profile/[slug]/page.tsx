@@ -23,6 +23,8 @@ const UserProfile = async ({ params }: ProfileParams) => {
 
     const slug=params.slug;
 
+    console.log(slug);
+
     const user = {
         id: '1',
         name: 'John Doe',
